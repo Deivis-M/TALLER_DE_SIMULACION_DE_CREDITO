@@ -20,3 +20,12 @@ function mostrarSeccion (id){
   ocultarSecciones();
   document.getElementById(id).classList.add("activa");
 }
+function guardarTasa(){
+  let valorTasa =recuperarInt("tasaInteres");
+  if (valorTasa>10 && valorTasa<20){
+    mostrarTexto("mensajeTasa","Tasa configurada correctamente: "+valorTasa+"%")
+  }
+  else{
+    mostrarTexto("mensajeTasa","La tasa debe estar entre 10% y 20%")
+  }
+}
