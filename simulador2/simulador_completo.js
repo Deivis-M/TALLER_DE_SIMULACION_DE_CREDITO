@@ -127,20 +127,34 @@ function buscarClienteCredito(){
   datosClienteCredito.innerHTML = comienzoDatos
 }
 
+
 function calcularCredito (){
   let cedula = recuperaraTexto("buscarCedulaCredito");
   let datosCliente = buscarCliente(cedula);
   if (datosCliente != null){
     let valorDisponible = calcularDisponible(datosCliente.ingresos,datosCliente.egresos);
-    capacidadPago = calcularCapacidadPago(valorDisponible);
-    totalPagar = calcularTotalPagar (recuperarFloat("montoCredito"),tasaInteres);
-    cuotaMensual = calcularCuotaMensual(totalPagar,recuperarFloat("plazoCredito"));
-    creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
+    let capacidadPago = calcularCapacidadPago(valorDisponible);
+    let totalPagar = calcularTotalPagar (recuperarFloat("montoCredito"),tasaInteres);
+    let cuotaMensual = calcularCuotaMensual(totalPagar,recuperarFloat("plazoCredito"));
+    let creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
+    let resultadoCredito = document.getElementById("resultadoCredito");
+    let comienzoCredito = "<p><strong>Capacidad de pago:</strong>"+capacidadPago.toFixed(2)+"</p>"
+        comienzoCredito +="<p><strong>Total a pagar:</strong>"+totalPagar.toFixed(2)+"</p>"
+        comienzoCredito +="<p><strong>Cuota Mensual:</strong>"+cuotaMensual.toFixed(2)+"</p>"
+    if (creditoAprobado == true){
+      comienzoCredito +="<p><strong> RESULTADO:</strong>APROBADO</p>"
+    }
+    else{
+      comienzoCredito +="<p><strong> RESULTADO:</strong>RECHAZADO</p>"
+    }
+    resultadoCredito.innerHTML = comienzoCredito
   }
   else{
-    let datosClienteCredito = document.getElementById("datosClienteCredito");
-    let comienzoDatos = "<h3>No se puede calcular el credito </h3>"+"<h3>Verifique la cédula ingresada </h3>"
-    datosClienteCredito.innerHTML = comienzoDatos
+    let mensajeCredito = document.getElementById("datosClienteCredito");
+    let mensajeCreditoError = "<h3>No se puede calcular el credito </h3>"+"<h3>Verifique la cédula ingresada </h3>"
+    datosClienteCredito.innerHTML = mensajeCreditoError
+    let resultadoCredito = document.getElementById("resultadoCredito");
+    resultadoCredito.innerHTML = ""
   }
 }
 
