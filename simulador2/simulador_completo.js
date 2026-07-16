@@ -16,6 +16,7 @@ function ocultarSecciones(){
   document.getElementById("parametros").classList.remove("activa");
   document.getElementById("clientes").classList.remove("activa");
   document.getElementById("credito").classList.remove("activa");
+  document.getElementById("Contacto").classList.remove("activa");
 }
 function mostrarSeccion (id){
   ocultarSecciones();
@@ -38,6 +39,7 @@ function guardarCliente(){
   let apellido = recuperaraTexto("txtApellido");
   let ingresos = recuperarFloat("nunIngreso");
   let egresos = recuperarFloat("nunEgresos");
+  let correo = recuperaraTexto("correo");
   let objetoCliente = {}
   if (estadoCliente == null){
     objetoCliente.cedula = cedula;
@@ -45,6 +47,7 @@ function guardarCliente(){
     objetoCliente.apellido = apellido;
     objetoCliente.ingresos = ingresos;
     objetoCliente.egresos = egresos;
+    objetoCliente.correo = correo;
     clientes.push(objetoCliente);
     pintarClientes()
     }
@@ -70,6 +73,7 @@ function pintarClientes (){
     tabla += "<td>"+datos.ingresos+"</td>"
     tabla += "<td>"+datos.egresos+"</td>"
     tabla += "<td><button onclick='seleccionarCliente("+datos.cedula+")'>Actualizar</button></td>"
+    tabla += "<td>"+datos.correo+"</td>"
     tabla += "</tr>"
   }
   modificarTabla.innerHTML=tabla;
