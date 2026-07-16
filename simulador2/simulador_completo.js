@@ -32,18 +32,28 @@ function guardarTasa(){
 
 function guardarCliente(){
   let cedula = recuperaraTexto("txtCedula");
+  let estadoCliente = buscarCliente(cedula);
   let nombre = recuperaraTexto("txtNombre");
   let apellido = recuperaraTexto("txtApellido");
   let ingresos = recuperarFloat("nunIngreso");
   let egresos = recuperarFloat("nunEgresos");
   let objetoCliente = {}
-  objetoCliente.cedula = cedula;
-  objetoCliente.nombre = nombre;
-  objetoCliente.apellido = apellido;
-  objetoCliente.ingresos = ingresos;
-  objetoCliente.egresos = egresos;
-  clientes.push(objetoCliente);
-  pintarClientes()
+  if (estadoCliente == null){
+    objetoCliente.cedula = cedula;
+    objetoCliente.nombre = nombre;
+    objetoCliente.apellido = apellido;
+    objetoCliente.ingresos = ingresos;
+    objetoCliente.egresos = egresos;
+    clientes.push(objetoCliente);
+    pintarClientes()
+    }
+    else{
+      estadoCliente.nombre = nombre;
+      estadoCliente.apellido = apellido;
+      estadoCliente.ingresos = ingresos;
+      estadoCliente.egresos = egresos;
+      pintarClientes()
+    }
 }
 
 function pintarClientes (){
@@ -58,8 +68,40 @@ function pintarClientes (){
     tabla += "<td>"+datos.apellido+"</td>"
     tabla += "<td>"+datos.ingresos+"</td>"
     tabla += "<td>"+datos.egresos+"</td>"
-    tabla += "<td><button>Actualizar</button></td>"
+    tabla += "<td><button onclick='seleccionarCliente("+datos.cedula+")'>Actualizar</button></td>"
     tabla += "</tr>"
   }
   modificarTabla.innerHTML=tabla;
+}
+
+function buscarCliente (cedula){
+  let clienteCedula ;
+  for (let i = 0;i<clientes.length;i++){
+    clienteCedula = clientes[i];
+    if (cedula == clienteCedula.cedula){
+      return clientes[i] ;
+    }
+  }
+  return null
+}
+
+function seleccionarCliente(cedula){
+  let clienteSeleccionado=buscarCliente(cedula)
+  if (clienteSeleccionado != null){
+    mostrarTextoEnCaja("txtCedula",clienteSeleccionado.cedula);
+    mostrarTextoEnCaja("txtNombre",clienteSeleccionado.nombre);
+    mostrarTextoEnCaja("txtApellido",clienteSeleccionado.apellido);
+    mostrarTextoEnCaja("nunIngreso",clienteSeleccionado.ingresos);
+    mostrarTextoEnCaja("nunEgresos",clienteSeleccionado.egresos);
+  }
+  else{
+  }
+}
+
+function limpiar (){
+    mostrarTextoEnCaja("txtCedula","");
+    mostrarTextoEnCaja("txtNombre","");
+    mostrarTextoEnCaja("txtApellido","");
+    mostrarTextoEnCaja("nunIngreso","");
+    mostrarTextoEnCaja("nunEgresos","");
 }
