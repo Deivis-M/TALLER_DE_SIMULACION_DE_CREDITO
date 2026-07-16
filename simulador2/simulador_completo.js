@@ -4,8 +4,9 @@
 
   let tasaInteres = 15;
   let clienteSeleccionado = null;
-  let cuotaCalculada = 0;
-  let montoCalculado = 0;
+  let capacidadPago = 0;
+  let totalPagar = 0;
+  let cuotaMensual = 0;
   let plazoCalculado = 0;
   let creditoAprobado = false;
 
@@ -124,4 +125,51 @@ function buscarClienteCredito(){
     comienzoDatos += "<h3>Cliente no encontrado </h3>"
   }
   datosClienteCredito.innerHTML = comienzoDatos
+}
+
+function calcularCredito (){
+  let cedula = recuperaraTexto("buscarCedulaCredito");
+  let datosCliente = buscarCliente(cedula);
+  if (datosCliente != null){
+    let valorDisponible = calcularDisponible(datosCliente.ingresos,datosCliente.egresos);
+    capacidadPago = calcularCapacidadPago(valorDisponible);
+    totalPagar = calcularTotalPagar (recuperarFloat("montoCredito"),tasaInteres);
+    cuotaMensual = calcularCuotaMensual(totalPagar,recuperarFloat("plazoCredito"));
+    creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
+  }
+  else{
+    let datosClienteCredito = document.getElementById("datosClienteCredito");
+    let comienzoDatos = "<h3>No se puede calcular el credito </h3>"+"<h3>Verifique la cédula ingresada </h3>"
+    datosClienteCredito.innerHTML = comienzoDatos
+  }
+}
+
+function calcularDisponible(ingreso, egresos) {
+    let disponible = ingreso - egresos;
+    if (disponible < 0) {
+        disponible = 0;
+    }
+    return disponible;
+}
+function calcularCapacidadPago(valorDisponible){
+    let calculo = (30/100)*valorDisponible;
+    return calculo
+}
+function calcularTotalPagar (monto,interes){
+    let calculo= monto+interes+100
+    return calculo
+}
+
+function calcularCuotaMensual(total,plazoAnios){
+    let meses = plazoAnios*12
+    let calculo = total/meses
+    return calculo
+}
+function aprobarCredito(capacidadPago,cuotaMensual){
+    if (capacidadPago>cuotaMensual){
+        return true
+    }
+    else{
+        return false
+    }
 }
