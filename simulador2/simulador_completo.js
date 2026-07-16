@@ -137,14 +137,16 @@ function calcularCredito (){
     let cuotaMensual = calcularCuotaMensual(totalPagar,recuperarFloat("plazoCredito"));
     let creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
     let resultadoCredito = document.getElementById("resultadoCredito");
-    let comienzoCredito = "<p><strong>Capacidad de pago:</strong>"+capacidadPago.toFixed(2)+"</p>"
-        comienzoCredito +="<p><strong>Total a pagar:</strong>"+totalPagar.toFixed(2)+"</p>"
-        comienzoCredito +="<p><strong>Cuota Mensual:</strong>"+cuotaMensual.toFixed(2)+"</p>"
+    let comienzoCredito = "<p><strong>Capacidad de pago: </strong>"+capacidadPago.toFixed(2)+"</p>"
+        comienzoCredito +="<p><strong>Total a pagar: </strong>"+totalPagar.toFixed(2)+"</p>"
+        comienzoCredito +="<p><strong>Cuota Mensual: </strong>"+cuotaMensual.toFixed(2)+"</p>"
     if (creditoAprobado == true){
       comienzoCredito +="<p><strong> RESULTADO:</strong>APROBADO</p>"
+      resultadoCredito.className = "aprobado";
     }
     else{
       comienzoCredito +="<p><strong> RESULTADO:</strong>RECHAZADO</p>"
+      resultadoCredito.className = "rechazado";
     }
     resultadoCredito.innerHTML = comienzoCredito
   }
