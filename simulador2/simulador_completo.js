@@ -4,9 +4,8 @@
 
   let tasaInteres = 15;
   let clienteSeleccionado = null;
-  let capacidadPago = 0;
-  let totalPagar = 0;
-  let cuotaMensual = 0;
+  let cuotaCalculada = 0;
+  let montoCalculado = 0;
   let plazoCalculado = 0;
   let creditoAprobado = false;
 
