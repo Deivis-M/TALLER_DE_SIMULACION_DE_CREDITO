@@ -8,7 +8,7 @@
   let montoCalculado = 0;
   let plazoCalculado = 0;
   let creditoAprobado = false;
-
+  let estadoBoton = true;
   
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
 
@@ -26,6 +26,7 @@ function guardarTasa(){
   let valorTasa =recuperarInt("tasaInteres");
   if (valorTasa>=10 && valorTasa<=20){
     mostrarTexto("mensajeTasa","Tasa configurada correctamente: "+valorTasa+"%")
+    tasaInteres = valorTasa
   }
   else{
     mostrarTexto("mensajeTasa","La tasa debe estar entre 10% y 20%")
@@ -138,8 +139,11 @@ function calcularCredito (){
     let valorDisponible = calcularDisponible(datosCliente.ingresos,datosCliente.egresos);
     let capacidadPago = calcularCapacidadPago(valorDisponible);
     let totalPagar = calcularTotalPagar (recuperarFloat("montoCredito"),tasaInteres);
-    let cuotaMensual = calcularCuotaMensual(totalPagar,recuperarFloat("plazoCredito"));
-    let creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
+    montoCalculado = totalPagar
+    plazoCalculado =recuperarFloat("plazoCredito")
+    let cuotaMensual = calcularCuotaMensual(totalPagar,plazoCalculado);
+    cuotaCalculada = cuotaMensual
+    creditoAprobado = aprobarCredito(capacidadPago,cuotaMensual);
     let resultadoCredito = document.getElementById("resultadoCredito");
     let comienzoCredito = "<p><strong>Capacidad de pago: </strong>"+capacidadPago.toFixed(2)+"</p>"
         comienzoCredito +="<p><strong>Total a pagar: </strong>"+totalPagar.toFixed(2)+"</p>"
@@ -147,10 +151,12 @@ function calcularCredito (){
     if (creditoAprobado == true){
       comienzoCredito +="<p><strong> RESULTADO:</strong>APROBADO</p>"
       resultadoCredito.className = "aprobado";
+      asignarCredito()
     }
     else{
       comienzoCredito +="<p><strong> RESULTADO:</strong>RECHAZADO</p>"
       resultadoCredito.className = "rechazado";
+      estadoBoton.disabled = true
     }
     resultadoCredito.innerHTML = comienzoCredito
   }
@@ -191,4 +197,27 @@ function aprobarCredito(capacidadPago,cuotaMensual){
     else{
         return false
     }
+}
+
+function asignarCredito (){
+  estadoBoton = document.getElementById("btnSolicitarCredito")
+  let cedula = recuperaraTexto("buscarCedulaCredito");
+  if (creditoAprobado == true){
+    estadoBoton.disabled = false;
+    let clienteSeleccionado=buscarCliente(cedula)
+    let credito = {
+    cedula : clienteSeleccionado.cedula,
+    nombre : clienteSeleccionado.nombre,
+    apellido :  clienteSeleccionado.apellido,
+    monto : montoCalculado,
+    tasa : tasaInteres,
+    plazo : plazoCalculado,
+    cuota :cuotaCalculada
+    }
+    creditos.push(credito)
+  }
+
+  else {
+    estadoBoton.disabled = true;
+  }
 }
