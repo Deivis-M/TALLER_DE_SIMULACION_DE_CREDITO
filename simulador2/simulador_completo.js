@@ -236,14 +236,21 @@ function pintarCreditos (creditos){
   let elementosTabla = "";
   for (let i = 0 ; i< creditos.length;i++){
       let datosCreditos = creditos[i]
+      let meses = datosCreditos.plazo * 12
       elementosTabla += "<tr><td>"+datosCreditos.cedula+"</td>"
       elementosTabla += "<td>"+datosCreditos.nombre+"</td>"
       elementosTabla += "<td>"+datosCreditos.apellido+"</td>"
-      elementosTabla += "<td>"+datosCreditos.monto+"</td>"
-      elementosTabla += "<td>"+datosCreditos.tasa+"</td>"
-      elementosTabla += "<td>"+datosCreditos.plazo+"</td>"
-      elementosTabla += "<td>"+datosCreditos.cuota+"</td>"
+      elementosTabla += "<td>"+datosCreditos.monto.toFixed(2)+"</td>"
+      elementosTabla += "<td>"+datosCreditos.tasa+" %"+"</td>"
+      elementosTabla += "<td>"+meses+" meses</td>"
+      elementosTabla += "<td>"+datosCreditos.cuota.toFixed(2)+"</td>"
       elementosTabla += "<td><button>Eliminar</button></td></tr>"
   }
   tabla.innerHTML = elementosTabla;
+}
+
+function buscarCreditosCliente (){
+  let cedula = recuperaraTexto("buscarCedulaListado")
+  let datos =buscarCreditos(cedula)
+  pintarCreditos (datos)
 }
