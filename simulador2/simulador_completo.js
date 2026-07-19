@@ -8,7 +8,7 @@
   let montoCalculado = 0;
   let plazoCalculado = 0;
   let creditoAprobado = false;
-  let estadoBoton = true;
+  let estadoBoton = document.getElementById("btnSolicitarCredito");
   
 //Para recuperar o mostrar información usar los métodos de la clase utilitarios, puede agregar métodos adicionales en utilitarios
 
@@ -152,7 +152,7 @@ function calcularCredito (){
     if (creditoAprobado == true){
       comienzoCredito +="<p><strong> RESULTADO:</strong>APROBADO</p>"
       resultadoCredito.className = "aprobado";
-      asignarCredito()
+      estadoBoton.disabled = false
     }
     else{
       comienzoCredito +="<p><strong> RESULTADO:</strong>RECHAZADO</p>"
@@ -201,10 +201,8 @@ function aprobarCredito(capacidadPago,cuotaMensual){
 }
 
 function asignarCredito (){
-  estadoBoton = document.getElementById("btnSolicitarCredito")
   let cedula = recuperaraTexto("buscarCedulaCredito");
   if (creditoAprobado == true){
-    estadoBoton.disabled = false;
     let clienteSeleccionado=buscarCliente(cedula)
     let credito = {
     cedula : clienteSeleccionado.cedula,
