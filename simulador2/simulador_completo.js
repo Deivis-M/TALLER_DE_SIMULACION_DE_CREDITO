@@ -230,3 +230,20 @@ function buscarCreditos (cedula) {
   }
   return datosCreditoCliente
 }
+
+function pintarCreditos (creditos){
+  let tabla = document.getElementById("tablaCreditos");
+  let elementosTabla = "";
+  for (let i = 0 ; i< creditos.length;i++){
+      let datosCreditos = creditos[i]
+      elementosTabla += "<tr><td>"+datosCreditos.cedula+"</td>"
+      elementosTabla += "<td>"+datosCreditos.nombre+"</td>"
+      elementosTabla += "<td>"+datosCreditos.apellido+"</td>"
+      elementosTabla += "<td>"+datosCreditos.monto+"</td>"
+      elementosTabla += "<td>"+datosCreditos.tasa+"</td>"
+      elementosTabla += "<td>"+datosCreditos.plazo+"</td>"
+      elementosTabla += "<td>"+datosCreditos.cuota+"</td>"
+      elementosTabla += "<td><button>Eliminar</button></td></tr>"
+  }
+  tabla.innerHTML = elementosTabla;
+}
