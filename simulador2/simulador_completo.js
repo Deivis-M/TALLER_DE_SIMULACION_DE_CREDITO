@@ -222,3 +222,13 @@ function asignarCredito (){
     estadoBoton.disabled = true;
   }
 }
+
+function buscarCreditos (cedula) {
+  let datosCreditoCliente = [];
+  for (let i = 0 ;i<creditos.length;i++){
+      if (cedula == creditos[i].cedula){
+       datosCreditoCliente.push(creditos[i])
+      }
+  }
+  return datosCreditoCliente
+}
