@@ -126,11 +126,15 @@ function limpiarCredito(){
   resultadoCredito.className = "";
   let datosClienteCredito = document.getElementById("datosClienteCredito")
   datosClienteCredito.innerHTML = "";
+  estadoBoton.disabled = true;
+  creditoAprobado = false;
 }
 
 function limpiarCreditosRegistrados(){
-  let cajaTexto = document.getElementById("buscarCedulaListado")  
+  let cajaTexto = document.getElementById("buscarCedulaListado")
+  cajaTexto.innerHTML = ""  
 }
+
 function buscarClienteCredito(){
   let cedula = recuperaraTexto("buscarCedulaCredito");
   let estadoCliente=buscarCliente (cedula);
@@ -149,7 +153,7 @@ function buscarClienteCredito(){
   }
   datosClienteCredito.innerHTML = comienzoDatos
 }
-mensajeCredito
+
 function calcularCredito (){
   let cedula = recuperaraTexto("buscarCedulaCredito");
   let datosCliente = buscarCliente(cedula);
@@ -265,6 +269,7 @@ function pintarCreditos (creditos){
       elementosTabla += "<td><button>Eliminar</button></td></tr>"
   }
   tabla.innerHTML = elementosTabla;
+  limpiarCreditosRegistrados()
 }
 
 function buscarCreditosCliente (){
