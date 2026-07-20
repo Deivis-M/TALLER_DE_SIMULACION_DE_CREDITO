@@ -131,8 +131,7 @@ function limpiarCredito(){
 }
 
 function limpiarCreditosRegistrados(){
-  let cajaTexto = document.getElementById("buscarCedulaListado")
-  cajaTexto.innerHTML = ""  
+  mostrarTextoEnCaja("buscarCedulaListado","") 
 }
 
 function buscarClienteCredito(){
