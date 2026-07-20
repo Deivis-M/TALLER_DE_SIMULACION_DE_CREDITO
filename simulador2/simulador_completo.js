@@ -22,6 +22,9 @@ function ocultarSecciones(){
 function mostrarSeccion (id){
   ocultarSecciones();
   document.getElementById(id).classList.add("activa");
+  limpiar()
+  limpiarCredito()
+  limpiarCreditosRegistrados()
 }
 function guardarTasa(){
   let valorTasa =recuperarInt("tasaInteres");
@@ -111,8 +114,23 @@ function limpiar (){
     mostrarTextoEnCaja("txtApellido","");
     mostrarTextoEnCaja("nunIngreso","");
     mostrarTextoEnCaja("nunEgresos","");
+    mostrarTextoEnCaja("correo",""); 
 }
 
+function limpiarCredito(){
+  mostrarTextoEnCaja("buscarCedulaCredito","");
+  mostrarTextoEnCaja("montoCredito","");
+  mostrarTextoEnCaja("plazoCredito","");
+  let resultadoCredito = document.getElementById("resultadoCredito");
+  resultadoCredito.innerHTML = "";
+  resultadoCredito.className = "";
+  let datosClienteCredito = document.getElementById("datosClienteCredito")
+  datosClienteCredito.innerHTML = "";
+}
+
+function limpiarCreditosRegistrados(){
+  let cajaTexto = document.getElementById("buscarCedulaListado")  
+}
 function buscarClienteCredito(){
   let cedula = recuperaraTexto("buscarCedulaCredito");
   let estadoCliente=buscarCliente (cedula);
@@ -131,8 +149,7 @@ function buscarClienteCredito(){
   }
   datosClienteCredito.innerHTML = comienzoDatos
 }
-
-
+mensajeCredito
 function calcularCredito (){
   let cedula = recuperaraTexto("buscarCedulaCredito");
   let datosCliente = buscarCliente(cedula);
@@ -164,7 +181,7 @@ function calcularCredito (){
   else{
     let mensajeCredito = document.getElementById("datosClienteCredito");
     let mensajeCreditoError = "<h3>No se puede calcular el credito </h3>"+"<h3>Verifique la cédula ingresada </h3>"
-    datosClienteCredito.innerHTML = mensajeCreditoError
+    mensajeCredito.innerHTML = mensajeCreditoError
     let resultadoCredito = document.getElementById("resultadoCredito");
     resultadoCredito.innerHTML = ""
   }
@@ -214,6 +231,7 @@ function asignarCredito (){
     cuota :cuotaCalculada
     }
     creditos.push(credito)
+    alert("✅ Crédito asignado correctamente");
   }
 
   else {
@@ -223,12 +241,12 @@ function asignarCredito (){
 
 function buscarCreditos (cedula) {
   let datosCreditoCliente = [];
-  for (let i = 0 ;i<creditos.length;i++){
-      if (cedula == creditos[i].cedula){
-       datosCreditoCliente.push(creditos[i])
-      }
-  }
-  return datosCreditoCliente
+    for (let i = 0 ;i<creditos.length;i++){
+        if (cedula == creditos[i].cedula){
+        datosCreditoCliente.push(creditos[i])
+        } 
+    }
+    return datosCreditoCliente
 }
 
 function pintarCreditos (creditos){
